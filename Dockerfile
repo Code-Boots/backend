@@ -1,34 +1,20 @@
 # 
-FROM python:3.11 as requirements-stage
-
-# 
-WORKDIR /tmp
-
-# 
-RUN pip install poetry
-
-# 
-COPY ./pyproject.toml ./poetry.lock* /tmp/
-
-# 
-RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
-
-# 
 FROM python:3.11
 
 # 
 WORKDIR /code
 
 # 
-COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
-
-# 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install poetry
 
 # 
 COPY . .
 
+RUN poetry config installer.max-workers 10
+
+RUN poetry install
+
 EXPOSE ${PORT}
 
 
-CMD ["sh","-c","uvicorn credito.server:app --port $PORT --host $HOST "]
+CMD ["sh","-c","poetry run serve-prod"]

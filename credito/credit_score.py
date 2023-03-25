@@ -3,9 +3,6 @@ from faker import Faker
 from datetime import datetime
 from .types import CreditCard, CreditLine, CreditScore, Loan
 
-# from faker_credit_score import CreditScore
-from pydantic import BaseModel, Field
-
 fake = Faker()
 # fake.add_provider(CreditScore)
 
