@@ -8,12 +8,27 @@ from .env import ENV
 from .credit_score import get_credit_score
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.security import HTTPBearer
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(docs_url="/docs")
 
 security = HTTPBearer(
     bearerFormat="Bearer",
     scheme_name="Google Oauth",
+)
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=3600,
 )
 
 app.add_middleware(SessionMiddleware, secret_key=ENV.SECRET_KEY)
