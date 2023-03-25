@@ -17,7 +17,7 @@ RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 FROM python:3.11
 
 # 
-WORKDIR /app
+WORKDIR /code
 
 # 
 COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
@@ -26,7 +26,7 @@ COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 # 
-COPY . /code/app
+COPY . /code
 
 # 
 CMD ["uvicorn", "credito.server:app", "--host", "${HOST}", "--port", "${PORT}"]
