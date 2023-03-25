@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, cast
+from typing import Dict, List, cast
 from bson import ObjectId
 from pydantic import EmailStr, constr
 
@@ -81,8 +81,14 @@ class UserData(BaseModel):
 
     async def update_registration(self, regis_data: UserInfoData):
         """Updates the user registration data"""
+
         await db["user_data"].update_one(
-            {"_id": self._id}, {"$set": regis_data.dict(exclude={"email"})}
+            {"_id": self._id},
+            {
+                "$set": regis_data.dict(
+                    exclude={"email"}, include={"is_registered": True}
+                )
+            },
         )
         return self
 
@@ -128,10 +134,26 @@ class CreditScore(BaseModel):
     """Stores the Credit Score of a User"""
 
     _id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    user_id: int = Field(foreign_key="user_data.id")
+    user_id: PyObjectId | None = Field(default=None, alias="user_id")
     score: int
     provider: str
     latest: datetime = Field(default_factory=datetime.now)
     credit_lines: List[CreditLine] = list()
     credit_cards: List[CreditCard] = list()
     loans: list[Loan] = list()
+
+    class Config:
+        allow_population_by_field_name = True
+        json_encoders = {ObjectId: str}
+
+    async def create_one(self):
+        """Creates a USER Data"""
+        res = await db["user_credit"].insert_one(self.dict())
+        return self
+
+    @staticmethod
+    async def fetch_one(query: Dict[str, any]):  # type: ignore
+        res = await db["user_credit"].find_one(query)
+        return res
+
+    # async

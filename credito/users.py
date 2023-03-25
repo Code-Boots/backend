@@ -14,6 +14,7 @@ async def update_user_info(user_info: UserInfoData, authentication: str = Header
         token = await check_jwt(authentication)
         user_data = await UserData.from_jwt(token)
         await user_data.update_registration(user_info)
+
         return {
             "status": "success",
         }

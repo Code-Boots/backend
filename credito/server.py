@@ -1,6 +1,8 @@
 from datetime import datetime
 from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel, Field
+
+from credito.models import UserData
 from .users import user_routes
 from credito.auth_jwt import check_jwt
 from .auth import auth_router
@@ -49,7 +51,13 @@ def hello_world():
 async def provide_credit_score(authentication: str = Header(...)):
     """Provides the latest Credit Score of a Given User"""
     try:
-        await check_jwt(authentication)
+        data = await check_jwt(authentication)
+        user_data = await UserData.from_jwt(data)
+        if not user_data.is_registered:
+            raise HTTPException(
+                status_code=404,
+                detail="User details not found. User needs to fill data to continue",
+            )
     except Exception as e:
         raise HTTPException(status_code=401, detail="Disallowed")
-    return get_credit_score()
+    return await get_credit_score(user_data._id)
