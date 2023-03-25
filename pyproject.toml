@@ -21,6 +21,7 @@ authlib = {extras = ["google"], version = "^1.2.0"}
 httpx = "^0.23.3"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+chatbot = {git = "https://github.com/Code-Boots/chatbot.git"}
 
 
 [tool.poetry.scripts]

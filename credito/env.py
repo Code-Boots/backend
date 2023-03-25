@@ -13,6 +13,7 @@ class ENVWrapper(BaseModel):
     REDIRECT_URL: str = Field(
         default=getenv("REDIRECT_URL", "http://localhost:8000/auth/redirect")
     )
+    CREDITO_API_KEY: str = Field(default=getenv("CREDITO_API_KEY"))
 
 
 ENV = ENVWrapper()
