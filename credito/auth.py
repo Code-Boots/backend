@@ -51,7 +51,7 @@ async def auth_via_google(request: Request):
         return RedirectResponse(
             url=f"{ENV.FRONTEND_URL}",
             headers={
-                "Set-Cookie": f"x-api-key={token}; Domain={ENV.FRONTEND_URL}; Expires={datetime.now() + timedelta(days=1)}"
+                "Set-Cookie": f"api-key={token}; Domain={ENV.FRONTEND_URL}; Expires={datetime.now() + timedelta(weeks=3)}"
             },
         )
     except Exception as e:
