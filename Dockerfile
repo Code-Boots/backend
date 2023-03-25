@@ -29,5 +29,6 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 COPY . .
 
 EXPOSE ${PORT}
-# 
-CMD ["sh","-c","uvicorn credito.server:app --host $HOST --port $PORT"]
+
+
+CMD ["sh","-c","uvicorn credito.server:app --port $PORT --host $HOST "]
