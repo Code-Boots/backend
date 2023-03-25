@@ -1,1 +1,0 @@
-web: uvicorn credito.server:app --host HOST --port $PORT
