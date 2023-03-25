@@ -3,7 +3,7 @@
 Running FastAPI
 
 # For Deployed Version:
-go to `<url>/docs` for openAPI docs
+go to `https://credito-backend.onrender.com/docs/docs` for openAPI docs
 
 # For local Development:
 - clone repo
