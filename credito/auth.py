@@ -49,7 +49,7 @@ async def auth_via_google(request: Request):
         user = await UserData.from_db(response.email, response)
         token = await create_access_token(user)
         return RedirectResponse(
-            url=f"{ENV.FRONTEND_URL}", headers={"x-access-token": token}
+            url=f"{ENV.FRONTEND_URL}", headers={"Set-Cookie": f"x-api-key={token}"}
         )
     except Exception as e:
         import traceback
