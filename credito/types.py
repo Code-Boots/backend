@@ -67,3 +67,9 @@ class OauthResponse(BaseModel):
     locale: str
     iat: int
     exp: int
+
+
+class JWTData(BaseModel):
+    name: str
+    uid: str
+    email: str

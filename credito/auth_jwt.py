@@ -4,6 +4,7 @@ import jwt
 
 from credito.env import ENV
 from credito.models import UserData
+from credito.types import JWTData
 
 
 ALGORITHM = "HS256"
@@ -14,14 +15,19 @@ ACCESS_TOKEN_EXPIRE_DAYS = 7
 async def create_access_token(
     inp_data: UserData, expires_delta: timedelta | None = None
 ):
-    data = inp_data.dict()
-    to_encode = data.copy()
+    to_encode = JWTData(
+        name=inp_data.name,
+        uid=str(inp_data.uid),
+        email=inp_data.email,
+    )
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
         expire = datetime.utcnow() + timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, ENV.SECRET_KEY, algorithm=ALGORITHM)
+
+    encoded_jwt = jwt.encode(
+        to_encode.dict(include={"exp": expire}), ENV.SECRET_KEY, algorithm=ALGORITHM
+    )
     return encoded_jwt
 
 

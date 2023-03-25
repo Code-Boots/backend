@@ -64,7 +64,7 @@ class UserData(BaseModel):
     async def from_db(email: str, oauth_data: OauthResponse) -> "UserData":
         """Updates data if user exists else creates a new user"""
         data: UserData | None = await db["user_data"].find_one({"email": email})
-        print("\n" * 10, "return data:\n", data, "\n" * 10)
+        data = UserData(**data) if isinstance(data, dict) else None  # type: ignore
         if not data:
             data = await UserData.from_oauth_response(response=oauth_data)
             await data.create_one()

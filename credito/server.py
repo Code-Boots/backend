@@ -35,15 +35,3 @@ async def provide_credit_score(authentication: str = Header(...)):
     except Exception as e:
         raise HTTPException(status_code=401, detail="Disallowed")
     return get_credit_score()
-
-
-# @app.post("/credit_score")
-# async def create_credit_score(credit_score: CreditScore):
-#     """Creates a Credit Score for a Given User"""
-
-#     return credit_score
-
-
-# @app.post("/user/create")
-# async def create_user(user_data: UserData):
-#     return await user_data.create_one()
