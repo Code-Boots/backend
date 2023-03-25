@@ -14,17 +14,6 @@ class UserData(BaseModel):
     pan: PanCardType  # type: ignore Mypy dumb
 
 
-class CreditScore(BaseModel):
-    """Stores the Credit Score of a User"""
-
-    score: int
-    provider: str
-    latest: datetime = Field(default_factory=datetime.now)
-    credit_lines: List["CreditLine"] = list()
-    credit_cards: List["CreditCard"] = list()
-    loans: list["Loan"] = list()
-
-
 class CreditLine(BaseModel):
     """Stores a credit line detail of a Credit Score"""
 
@@ -60,3 +49,14 @@ class Loan(BaseModel):
     next_due_date: datetime = Field(default_factory=datetime.now)
     left_to_pay: int
     tenure: int
+
+
+class CreditScore(BaseModel):
+    """Stores the Credit Score of a User"""
+
+    score: int
+    provider: str
+    latest: datetime = Field(default_factory=datetime.now)
+    credit_lines: List[CreditLine] = list()
+    credit_cards: List[CreditCard] = list()
+    loans: list[Loan] = list()
