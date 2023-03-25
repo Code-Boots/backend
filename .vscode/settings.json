@@ -1,0 +1,6 @@
+{
+    "workbench.colorCustomizations": {
+        "editorInlayHint.foreground": "#eec2ff5c"
+    },
+    "python.analysis.typeCheckingMode": "basic"
+}
