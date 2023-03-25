@@ -28,12 +28,10 @@ def hello_world():
 
 
 @app.post("/credit_score/gen")
-async def provide_credit_score(
-    # authentication: str = Header(...)
-):
+async def provide_credit_score(authentication: str = Header(...)):
     """Provides the latest Credit Score of a Given User"""
-    # try:
-    #     await check_jwt(authentication)
-    # except Exception as e:
-    #     raise HTTPException(status_code=401, detail="Disallowed")
+    try:
+        await check_jwt(authentication)
+    except Exception as e:
+        raise HTTPException(status_code=401, detail="Disallowed")
     return get_credit_score()
