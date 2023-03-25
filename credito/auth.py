@@ -41,7 +41,7 @@ async def login_via_google(request: Request):
 async def auth_via_google(request: Request):
     """Returns a redirect Response which redirects the user to the frontend url
     it also sets the access token ( bearer Token ) in the header with key
-    `x-access-token`
+    `api-key`
     """
     try:
         token = await oauth.google.authorize_access_token(request)  # type: ignore
@@ -49,10 +49,10 @@ async def auth_via_google(request: Request):
         user = await UserData.from_db(response.email, response)
         token = await create_access_token(user)
         return RedirectResponse(
-            url=f"{ENV.FRONTEND_URL}",
-            headers={
-                "Set-Cookie": f"api-key={token}; Domain={ENV.FRONTEND_URL}; Expires={datetime.now() + timedelta(weeks=3)}"
-            },
+            url=f"{ENV.FRONTEND_URL}?apikey={token}",
+            # headers={
+            #     "Set-Cookie": f"api-key={token}; Expires={datetime.now() + timedelta(weeks=3)}"
+            # },
         )
     except Exception as e:
         import traceback
