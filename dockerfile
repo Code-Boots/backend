@@ -29,4 +29,4 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 COPY ./app /code/app
 
 # 
-CMD ["uvicorn", "app.main:app", "--host", "${HOST}", "--port", "${PORT}"]
+CMD ["uvicorn", "credito.server:app", "--host", "${HOST}", "--port", "${PORT}"]
