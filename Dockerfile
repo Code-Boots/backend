@@ -30,4 +30,4 @@ COPY . .
 
 EXPOSE ${PORT}
 # 
-CMD uvicorn credito.server:app --workers 2 --host ${HOST} --port ${PORT}
+CMD uvicorn credito.server:app --reload --host ${HOST} --port ${PORT}
