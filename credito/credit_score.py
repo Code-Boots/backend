@@ -1,7 +1,7 @@
 from typing import List
 from faker import Faker
 from datetime import datetime
-from .types import CreditCard, CreditLine, CreditScore, Loan, UserData
+from .types import CreditCard, CreditLine, CreditScore, Loan
 
 # from faker_credit_score import CreditScore
 from pydantic import BaseModel, Field
@@ -61,7 +61,7 @@ def get_dummy_credit_score():
     return score
 
 
-def get_credit_score(user_data: UserData):
+def get_credit_score():
     """Return Credit Report of a given User"""
     # Currently returning Dummy data
     data = get_dummy_credit_score()

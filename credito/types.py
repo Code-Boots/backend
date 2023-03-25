@@ -3,17 +3,6 @@ from pydantic import BaseModel, EmailStr, Field, constr
 from typing import List
 
 
-PanCardType = constr(curtail_length=10, regex=r"[A-Z]{5}[0-9]{4}[A-Z]{1}")
-
-
-class UserData(BaseModel):
-    """User Data Model which stores personal user data"""
-
-    name: str
-    email: EmailStr
-    pan: PanCardType  # type: ignore Mypy dumb
-
-
 class CreditLine(BaseModel):
     """Stores a credit line detail of a Credit Score"""
 
@@ -60,3 +49,21 @@ class CreditScore(BaseModel):
     credit_lines: List[CreditLine] = list()
     credit_cards: List[CreditCard] = list()
     loans: list[Loan] = list()
+
+
+class OauthResponse(BaseModel):
+    iss: str
+    azp: str
+    aud: str
+    sub: str
+    email: str
+    email_verified: bool
+    at_hash: str
+    nonce: str
+    name: str
+    picture: str
+    given_name: str
+    family_name: str
+    locale: str
+    iat: int
+    exp: int

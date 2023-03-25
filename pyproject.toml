@@ -8,10 +8,19 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 faker = "^18.3.1"
-fastapi = "^0.95.0"
+fastapi = "^0.92.0"
 uvicorn = "^0.21.1"
 faker-credit-score = "^0.3.0"
 pydantic = {extras = ["email"], version = "^1.10.7"}
+psycopg = {extras = ["binary"], version = "^3.1.8"}
+pyjwt = "^2.6.0"
+psycopg2 = {extras = ["binary"], version = "^2.9.5"}
+motor = "^3.1.1"
+itsdangerous = "^2.1.2"
+authlib = {extras = ["google"], version = "^1.2.0"}
+httpx = "^0.23.3"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 
 [tool.poetry.scripts]
 serve = "credito:run_server"
