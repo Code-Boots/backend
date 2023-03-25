@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from fastapi import HTTPException
 
 import jwt
 
@@ -31,9 +32,9 @@ async def create_access_token(
     return encoded_jwt
 
 
-async def check_jwt(token: str):
+async def check_jwt(token: str) -> JWTData:
     try:
-        payload = jwt.decode(token, ENV.SECRET_KEY, algorithms=[ALGORITHM])
+        payload = JWTData(**jwt.decode(token, ENV.SECRET_KEY, algorithms=[ALGORITHM]))
         return payload
     except Exception as e:
-        raise e
+        raise HTTPException(status_code=401, detail="Disallowed")

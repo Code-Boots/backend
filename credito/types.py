@@ -73,3 +73,25 @@ class JWTData(BaseModel):
     name: str
     uid: str
     email: str
+    exp: datetime | None = None
+
+
+class UserInfoData(BaseModel):
+    phone: str = Field(unique=True, nullable=False)
+    address1: str = Field(max_length=100, nullable=False)
+    address2: str | None = Field(max_length=100, default=None)
+    address3: str | None = Field(max_length=100, default=None)
+    pincode: str = Field(
+        max_length=7, default="1000001", nullable=False, regex=r"\d{7}"
+    )
+
+    state: str = Field(max_length=50, default="Delhi", nullable=False)
+
+    pan: str = Field(
+        max_length=10,
+        min_length=10,
+        nullable=False,
+        unique=True,
+        regex=r"[A-Z]{5}[0-9]{4}[A-Z]{1}",
+    )
+    dob: datetime = Field(default_factory=datetime.now, nullable=False)

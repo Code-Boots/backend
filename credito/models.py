@@ -4,7 +4,7 @@ from bson import ObjectId
 from pydantic import EmailStr, constr
 
 from credito.database import PyObjectId
-from credito.types import OauthResponse
+from credito.types import JWTData, OauthResponse, UserInfoData
 from .env import ENV
 from pydantic import BaseModel, Field
 from .database import db
@@ -71,8 +71,20 @@ class UserData(BaseModel):
             return data
         return data
 
-    async def generate_jwt_key(self) -> str:
-        ...
+    @staticmethod
+    async def from_jwt(token: JWTData) -> "UserData":
+        data: UserData | None = await db["user_data"].find_one({"id": token.uid})
+        data = UserData(**data) if isinstance(data, dict) else None
+        if not data:
+            raise ValueError("User not found")
+        return data
+
+    async def update_registration(self, regis_data: UserInfoData):
+        """Updates the user registration data"""
+        await db["user_data"].update_one(
+            {"_id": self._id}, {"$set": regis_data.dict(exclude={"email"})}
+        )
+        return self
 
 
 class CreditLine(BaseModel):
