@@ -41,7 +41,7 @@ async def login_via_google(request: Request):
 async def auth_via_google(request: Request):
     """Returns a redirect Response which redirects the user to the frontend url
     it also sets the access token ( bearer Token ) in the header with key
-    `api-key`
+    `apikey`
     """
     try:
         token = await oauth.google.authorize_access_token(request)  # type: ignore
