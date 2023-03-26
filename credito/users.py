@@ -33,4 +33,7 @@ async def get_user_info(authentication: str = Header(...)):
         token = await check_jwt(authentication)
         return await UserData.from_jwt(token)
     except ValueError as v:
+        import traceback
+
+        traceback.print_exc()
         raise HTTPException(status_code=404, detail=str(v))

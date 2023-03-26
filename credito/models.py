@@ -73,7 +73,7 @@ class UserData(BaseModel):
 
     @staticmethod
     async def from_jwt(token: JWTData) -> "UserData":
-        data: UserData | None = await db["user_data"].find_one({"id": token.uid})
+        data: UserData | None = await db["user_data"].find_one({"email": token.email})
         data = UserData(**data) if isinstance(data, dict) else None
         if not data:
             raise ValueError("User not found")

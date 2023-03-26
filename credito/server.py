@@ -59,5 +59,8 @@ async def provide_credit_score(authentication: str = Header(...)):
                 detail="User details not found. User needs to fill data to continue",
             )
     except Exception as e:
+        import traceback
+
+        traceback.print_exc()
         raise HTTPException(status_code=401, detail="Disallowed")
     return await get_credit_score(user_data._id)

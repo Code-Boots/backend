@@ -18,7 +18,7 @@ async def create_access_token(
 ):
     to_encode = JWTData(
         name=inp_data.name,
-        uid=str(inp_data.uid),
+        uid=str(inp_data._id),
         email=inp_data.email,
     )
     if expires_delta:
