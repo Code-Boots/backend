@@ -37,7 +37,7 @@ class UserData(BaseModel):
     dob: datetime = Field(default_factory=datetime.now, nullable=False)
     created_at: datetime = Field(default_factory=datetime.now)
 
-    is_registered: bool = Field(default=False)
+    is_registered: bool = Field(default=True)
 
     @property
     def uid(self) -> str:

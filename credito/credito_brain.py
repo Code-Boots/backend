@@ -28,6 +28,7 @@ async def post_message(message: Message, authentication: str = Header(...)):
         resp = await check_jwt(authentication)
     except Exception as e:
         raise HTTPException(status_code=401, detail="Disallowed")
+
     brain = CreditoChatMemory.get(resp.uid, list())
 
     CreditoChat.questionBank = brain  # type: ignore
