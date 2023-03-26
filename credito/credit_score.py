@@ -165,14 +165,14 @@ def get_random_credit_score():
     return score
 
 
-async def get_credit_score(user_id: PyObjectId):
+async def get_credit_score(user_email: str):
     """Return Credit Report of a given User"""
     # Currently returning Dummy data
-    data: CreditScore | None = await CreditScore.fetch_one({"user_id": user_id})
+    data: CreditScore | None = await CreditScore.fetch_one({"email": user_email})
     data = CreditScore(**data) if isinstance(data, dict) else None
     if data:
         return data
     data = get_random_credit_score()
-    data.user_id = user_id
+    data.user_email = user_email
     await data.create_one()
     return data

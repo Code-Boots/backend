@@ -83,7 +83,7 @@ class UserData(BaseModel):
         """Updates the user registration data"""
 
         await db["user_data"].update_one(
-            {"_id": self._id},
+            {"email": self.email},
             {
                 "$set": regis_data.dict(
                     exclude={"email"}, include={"is_registered": True}
@@ -134,7 +134,7 @@ class CreditScore(BaseModel):
     """Stores the Credit Score of a User"""
 
     _id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    user_id: PyObjectId | None = Field(default=None, alias="user_id")
+    user_email: str | None = Field(default=None, alias="user_email")
     score: int
     provider: str
     latest: datetime = Field(default_factory=datetime.now)

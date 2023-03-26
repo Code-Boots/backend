@@ -63,4 +63,4 @@ async def provide_credit_score(authentication: str = Header(...)):
 
         traceback.print_exc()
         raise HTTPException(status_code=401, detail="Disallowed")
-    return await get_credit_score(user_data._id)
+    return await get_credit_score(user_data.email)
